@@ -6,4 +6,4 @@
 1. Скляров Александр
 2. Дудкин Николай
 
-Ссылка на развернутое приложение: [http://ijacketsshop.pythonanywhere.com/login?next=/]
+Ссылка на развернутое приложение: [http://ijacketsshop.pythonanywhere.com/login?next=/](ссылка)
