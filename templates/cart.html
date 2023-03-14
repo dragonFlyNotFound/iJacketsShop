@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="row">
+	<div class="col-lg-8">
+		<h3 class="bold">
+			<i class="glyphicon glyphicon-shopping-cart"></i> Корзина ваших покупок
+		</h3>
+
+		<div class="panel panel-primary">
+			<div class="panel-body">
+				{% for product in products %}
+				<div class="row">
+					<div class="col-lg-4">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="thumbnail thumbnail-q">
+								<img src="{{ url_for('showImage', id=product.id) }}" alt="">
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<h3 class="bold">{{ product['name'] }}</h3>
+						<p>₽{{ product['price'] / 100 }}</p>
+						<br />
+						<p>
+							<a href="{{ url_for('remove_from_cart', index=product['index']) }}">
+							<button type="button" class="btn btn-danger btn-xs">		
+								<i class="glyphicon glyphicon-trash"></i>
+							</button></a>
+						</p>
+					</div>
+					<div class="col-lg-2">
+						<h3>Кол-во</h3>
+						<p>
+							{{ product['quantity'] }}
+						</p>
+					</div>
+					<div class="col-lg-2">
+						<h3>Всего</h3>
+						<p>
+							<strong>₽{{ product['total'] / 100 }}</strong>
+						</p>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-4">
+		<h3 class="bold">
+			<i class="glyphicon glyphicon-th-list"></i> Сводка по корзине
+		</h3>
+
+		<div class="panel panel-primary">
+			<div class="panel-body">
+				Текущая сумма корзины
+			</div>
+			<ul class="list-group">
+				<li class="list-group-item">
+					<p>
+						{{ quantity_total }} Товар(а/ов) <strong class="pull-right">₽{{ grand_total / 100 }}</strong>
+					</p>
+					<p>
+						Доставка 24 часа <strong class="pull-right">₽10</strong>
+					</p>
+				</li>
+				<li class="list-group-item">
+					<p>Всего <strong class="pull-right">₽{{ grand_total_plus_shipping / 100 }}</strong></p>
+				</li>
+			</ul>
+			<div class="panel-footer">
+				<a href="{{ url_for('checkout') }}" class="btn btn-primary btn-sm">
+					Оформить <i class="glyphicon glyphicon-chevron-right"></i>
+				</a>
+				<a href="{{ url_for('index') }}" class="btn btn-link btn-sm pull-right">
+					<i class="glyphicon glyphicon-chevron-left"></i> Продолжить покупки
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

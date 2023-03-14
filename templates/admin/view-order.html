@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="row pad">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h3 class="bold">Заказ #{{ order.id }} От {{ user.first_name + ' ' + user.last_name }}</h3>
+				<p>Товаров: {{ order.quantity_total() }} (₽{{ order.order_total() / 100 }})</p>
+				<p>Статус: <span class="badge">{{ order.status }}</span></p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-6">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h4>Купленные товары</h4>
+			</div>
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>#</th><th>Название</th><th>Цена</th><th>Количество</th><th>Всего</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for item in order.items %}
+						<tr>
+							<td>{{ item.product_id }}</td>
+							<td>{{ item.product.name }}</td>
+							<td>₽{{ item.product.price / 100 }}</td>
+							<td>{{ item.quantity }}</td>
+							<th>₽{{ item.product.price * item.quantity / 100 }}</th>
+						</tr>
+						{% endfor %}
+						<tr>
+							<td>0</td>
+							<td>Фиксированная цена доставки</td>
+							<td>₽10.00</td>
+							<td>1</td>
+							<th>₽10.00</th>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th colspan="4" class="text-right">Итого</th>
+							<th>{{ order.order_total() / 100 }}</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<h3 class="strong">Информация о покупателе</h3>
+		<div role="tabpanel">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active">
+					<a href="#shipping" aria-controls="shipping" role="tab" data-toggle="tab">Информация о доставке</a>
+				</li>
+				<li role="presentation">
+					<a href="#details" aria-controls="details" role="tab" data-toggle="tab">Личные данные</a>
+				</li>
+			</ul>
+		
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="shipping">
+					<h4 class="bold">Информация о доставке</h4>
+					<p><i class="glyphicon glyphicon-user"></i><strong>{{ user.first_name + ' ' + user.last_name }}</strong></p>
+					<p><i class="glyphicon glyphicon-map-marker"></i> Адрес:
+						<strong>{{ order.address }}</strong>
+					</p>
+					<p><i class="glyphicon glyphicon-th"></i> Город: <strong>{{ order.city }}</strong></p>
+					<p><i class="glyphicon glyphicon-flag"></i> Страна: <strong>{{ order.country }}</strong></p>
+					<hr />
+					<p>
+						<i class="glyphicon glyphicon-gift"></i> 
+						Доставка: <strong>Доставка на следующий день</strong>
+					</p>
+					<hr />
+					<p>
+						<i class="glyphicon glyphicon-piggy-bank"></i> 
+						Тип оплаты: <strong>{{ order.payment_type }}</strong>
+					</p>
+				</div>
+				<div role="tabpanel" class="tab-pane" id="details">
+					<h4 class="bold">Предоставленные личные данные</h4>
+					<p><i class="glyphicon glyphicon-user"></i> <strong>{{ user.first_name + ' ' + user.last_name }}</strong></p>
+					<p><i class="glyphicon glyphicon-phone-alt"></i> Телефон: <strong>{{ user.phone_number }}</strong></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

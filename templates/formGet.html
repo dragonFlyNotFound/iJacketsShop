@@ -1,0 +1,20 @@
+<form action="" method="GET" class="form-contact">
+    {{ form.hidden_tag() }}
+
+    {% for field in form if field.name not in ['csrf_token', 'remember', 'submit'] -%}
+    <p>{{ field.label() }}
+        {% if field.errors %}
+        {{ field(class="invalid") }}
+        <span class="invalid-feedback">
+                   {% for error in field.errors %}
+                   {{ error }}
+                   {% endfor %}
+         </span>
+        {% else %}
+        {{ field() }}
+        {% endif %}
+        {% endfor %}
+    <button type="submit" class="btn btn-primary">
+					<i class="glyphicon glyphicon-shopping-cart"></i> Искать
+				</button>
+</form>

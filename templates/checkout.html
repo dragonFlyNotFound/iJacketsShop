@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="row">
+	<div class="col-lg-8">
+		<h3 class="bold">
+			<i class="glyphicon glyphicon-pencil"></i> Информация о доставке
+		</h3>
+
+		<div class="panel panel-primary">
+			<form method="POST" action="{{ url_for('checkout') }}">
+			<div class="panel-body">
+					{{ form.csrf_token }}
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label>Адрес</label>
+							{{ form.address(class='form-control') }}
+						</div>
+						<div class="form-group">
+							<label>Город</label>
+							{{ form.city(class='form-control') }}
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label>Страна</label>
+							{{ form.country(class='form-control') }}
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label>Вариант оплаты</label>
+							{{ form.payment_type(class='form-control') }}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel-footer">
+				<button type="submit" class="btn btn-primary btn-sm">
+					Отправить заказ
+				</button>
+			</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="col-lg-4">
+		<h3 class="bold">
+			<i class="glyphicon glyphicon-th-list"></i> Детали Корзины
+		</h3>
+
+		<div class="panel panel-primary">
+			<div class="panel-body">
+				Текущая стоимость корзины
+			</div>
+			<ul class="list-group">
+				<li class="list-group-item">
+					<p>
+						{{ quantity_total }} Предмет <strong class="pull-right">₽{{ grand_total / 100 }}</strong>
+					</p>
+					<p>
+						Доставка <strong class="pull-right">₽10</strong>
+					</p>
+				</li>
+				<li class="list-group-item">
+					<p>Всего <strong class="pull-right">₽{{ grand_total_plus_shipping / 100 }}</strong></p>
+				</li>
+			</ul>
+		</div>
+
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Преимущества</h3>
+			</div>
+			<div class="panel-body">
+				Некоторые из преимуществ совершения покупок у нас включают:
+			</div>
+			<ul class="list-group">
+				<li class="list-group-item">Защита покупателя</li>
+				<li class="list-group-item">Доставка на следующий день</li>
+				<li class="list-group-item">Гарантия возврата денег за 7 дней</li>
+			</ul>
+		</div>
+	</div>
+</div>
+{% endblock %}

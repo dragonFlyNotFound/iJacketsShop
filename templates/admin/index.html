@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block body %}
+<hr>{% for categories, messages in get_flashed_messages(True) %}
+<div class="flash {{categories}}">{{messages}}</div>
+{% endfor %}
+<hr>
+<div class="row pad">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-body text-center">
+				<h3 class="bold"><i class="glyphicon glyphicon-dashboard"></i> Админ панель</h3>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12">
+		<ul class="summary">
+			<li class="">Ожидаемые заказы <span class="badge">{{ orders|length }}</span></li>
+			<li class="">Товары на складе <span class="badge">{{ products_in_stock }}</span></li>
+			<li class="">Товары, отсутствующие на складе <span class="badge">{{ products|length - products_in_stock }}</span></li>
+			<li class="">Всего товаров <span class="badge">{{ products|length }}</span></li>
+		</ul>
+	</div>
+</div>
+<div class="row pad">
+	<div class="col-lg-6 pad">
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+				<h3 class="panel-title">Ожидаемые заказы</h3>
+			</div>
+			<div class="panel-body">
+				Заказы, которые еще не были выполнены
+			</div>
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>ID</th><th>Ссылка</th><th>Всего</th><th>Статус</th><th>Удалить</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for order in orders %}
+						<tr>
+							<td>{{ order.id }}</td>
+							<td><a href="{{ url_for('order', order_id=order.id) }}">Подробнее</a></td>
+							<td>₽{{ (order.order_total() + 1000) / 100 }}</td>
+							<td><span class="badge">{{ order.status }}</span></td>
+							<td><p>
+							<a href="{{ url_for('deleteOrder', order_id=order.id) }}">
+							<button type="button" class="btn btn-danger btn-xs">
+								<i class="glyphicon glyphicon-trash"></i>
+							</button></a>
+						</p></td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-6 pad">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Доступные товары</h3>
+			</div>
+				<div class="panel-body">{% include 'formGet.html' %}</div>
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>#</th><th>Название</th><th>Цена</th><th>Количество</th><th>Удалить</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for product in products %}
+						<tr>
+							<td>{{ product.id }}</td>
+							<td><a href="{{ url_for('edit', product_id=product.id) }}">{{ product.name }}</a></td>
+							<td>₽{{ product.price / 100 }}</td>
+							<td>{{ product.stock }} штук</td>
+							<td><p>
+							<a href="{{ url_for('deleteProduct', product_id=product.id) }}">
+							<button type="button" class="btn btn-danger btn-xs">
+								<i class="glyphicon glyphicon-trash"></i>
+							</button></a>
+						</p></td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

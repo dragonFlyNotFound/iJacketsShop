@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-8">
+        <h3 class="bold">
+            <i class="glyphicon glyphicon-pencil"></i> Регистрация
+        </h3>
+        <hr>
+        {% for categories, messages in get_flashed_messages(True) %}
+        <div class="flash {{categories}}">{{messages}}</div>
+        {% endfor %}
+        <hr>
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="bold">Персональные данные</h4>
+                    </div>
+                    <form action="{{ url_for('registration') }}" method="post" class="form-contact">
+                    {{ form.csrf_token }}
+                     <div class="col-lg-6">
+<br>
+                    {% for field in form if field.name not in ['csrf_token', 'submit'] -%}
+                        <div class="form-group">
+                            <p>{{ field.label() }}
+                                {% if field.errors %}
+                                <p>{{ field(class="invalid") }}
+                                <span class="invalid-feedback">
+                                    {% for error in field.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </span>
+                                {% else %}
+                                <p>{{ field(class='form-control') }}
+                                {% endif %}
+                                {% endfor %}
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+
+
+<div class="panel-footer">
+    <button type="submit" class="btn btn-primary btn-sm">
+        Зарегистрироваться
+    </button>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
