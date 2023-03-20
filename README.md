@@ -12,4 +12,4 @@
 
 Ссылка на Miro: [ссылка](https://miro.com/app/board/uXjVMbrDK10=/)
 
-Ссылка не метрику: [ссылка](https://metrika.yandex.ru/dashboard?id=92884294)
+Ссылка на метрику: [ссылка](https://metrika.yandex.ru/dashboard?id=92884294)
